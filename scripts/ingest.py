@@ -55,11 +55,13 @@ def load_and_prepare_data():
         return None
         
     df = pd.read_csv(CSV_PATH)
-    # Use a consistent ID based on row index if 'id' is not present
-    if 'id' not in df.columns:
-        df['id'] = [str(uuid.uuid4()) for _ in range(len(df))]
-    else:
-        df['id'] = df['id'].apply(lambda x: str(x) if pd.notna(x) else str(uuid.uuid4()))
+
+    # Preserve the original ID from the CSV by renaming it to 'row_id'.
+    if 'id' in df.columns:
+        df.rename(columns={'id': 'row_id'}, inplace=True)
+
+    # Always generate a new 'uuid' for each row to use as the Qdrant point ID.
+    df['uuid'] = [str(uuid.uuid4()) for _ in range(len(df))]
         
     df = df.fillna('')
 
@@ -119,7 +121,7 @@ def embed_and_upsert(df):
 
             points.append(
                 models.PointStruct(
-                    id=row['id'],
+                    id=row['uuid'], # Use the new 'uuid' column for the point ID
                     vector=embedding,
                     payload=payload
                 )
