@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Configuration
-BACKEND_URL = "http://localhost:8000/search"
+BACKEND_URL = "https://founder-rag.onrender.com/search"
 
 # --- Streamlit UI ---
 
