@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pandas
+qdrant-client
+cohere
+rank_bm25
+python-dotenv
