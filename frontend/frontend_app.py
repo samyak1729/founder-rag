@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
+import os
 
 # Configuration
-BACKEND_URL = "https://founder-rag.onrender.com/search"
+BACKEND_URL = os.getenv("BACKEND_URL", "https://founder-rag.onrender.com/search")
 
 # --- Streamlit UI ---
 
